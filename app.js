@@ -1,12 +1,12 @@
 'use strict';
-
+//**********************global variables****************************************
 var itemsArray = [];
 var count = 0;
-// var selectionDisplay = document.getElementById('selectionDisplay');
+var selectionDisplay = document.getElementById('selectionDisplay');
 var choices = document.getElementById('choices');
 var results = document.getElementById('results');
 var complete = document.getElementById('complete');
-
+//**********************intialize catalog***************************************
 new BusMallItem('img/banana.jpg', 'Banana Slicer', 'banana');
 new BusMallItem('img/bathroom.jpg', 'Bathroom Device Stand', 'bathroom' );
 new BusMallItem('img/boots.jpg', 'Toeless Rain Boots', 'boots' );
@@ -27,10 +27,7 @@ new BusMallItem('img/usb.gif', 'Tentical USB', 'usb' );
 new BusMallItem('img/water-can.jpg', 'Self Filling Water Can', 'water-can' );
 new BusMallItem('img/wine-glass.jpg', 'Useless Wineglass', 'wine-glass' );
 console.log(itemsArray);
-// for (var i = 0; i < itemsArray.length; i++){
-//   itemsArray[i].displayItem();
-// }
-
+//**********************item constructor****************************************
 function BusMallItem(imgSrc, displayName, name){
   this.imageSource = imgSrc;
   this.displayName = displayName;
@@ -44,14 +41,12 @@ function BusMallItem(imgSrc, displayName, name){
     var imageElement = document.createElement('img');
     imageElement.src = this.imageSource;
     imageElement.alt = this.name;
-    imageElement.setAttribute('width','auto');
-    imageElement.setAttribute('height','auto');
     lineElement.appendChild(imageElement);
     choices.appendChild(lineElement);
   };
   itemsArray.push(this);
 }
-
+//**********************get three items*****************************************
 function getThreeItems(){
   var threeArray = [];
   var indexArray = [];
@@ -74,13 +69,13 @@ function getThreeItems(){
       validItem = true;
     }
   }
-  console.log(indexArray);
   clearRecentlyUsed();
   itemsArray[indexArray[0]].recentlyUsed = true;
   itemsArray[indexArray[1]].recentlyUsed = true;
   itemsArray[indexArray[2]].recentlyUsed = true;
   return threeArray;
 }
+//************ Helper Functions for getThreeItems()***************************
 function findIndexByName(name){
   for (var i = 0; i < itemsArray.length; i++){
     if (itemsArray[i].name === name){
@@ -103,10 +98,14 @@ function displayThreeItems(){
     threeItems[i].displayItem();
   }
 }
+function runMain(){
+  displayThreeItems();
+}
 
+//**********************eventHandler********************************************
 function handleClickEvent(event){
   if(event.target.alt === undefined){ // eslint-disable-line
-    // console.log('You have to click on an image!!');
+    console.log('Invalid Click Response');
     return alert('You must Click on an Image!');
   }
 
@@ -116,21 +115,18 @@ function handleClickEvent(event){
       itemsArray[i].timesClicked += 1;
     }
   }
-
   displayThreeItems();
   count++;
-  // console.log(count);
   if (count === 25){
     removeListenerAndUpdate();
   }
-  //displayResults();
 }
-
+//**********************remove eventHandler*************************************
 function removeListenerAndUpdate(){
   selectionDisplay.removeEventListener('click',handleClickEvent);
   complete.textContent = 'See Results';
 }
-
+//**********************display results*****************************************
 function displayResults(){
   results.innerHTML = '';
   for (var i = 0; i < itemsArray.length; i++){
@@ -140,8 +136,9 @@ function displayResults(){
     results.appendChild(lineElement);
   }
 }
-
+//**********************eventListeners******************************************
 selectionDisplay.addEventListener('click', handleClickEvent);
 complete.addEventListener('click',displayResults);
 
-displayThreeItems();
+//**********************RUN THE CODE********************************************
+runMain();
