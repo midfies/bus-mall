@@ -45,6 +45,7 @@ function BusMallItem(imgSrc, displayName, name){
     imageElement.alt = this.name;
     lineElement.appendChild(imageElement);
     choices.appendChild(lineElement);
+
   };
   itemsArray.push(this);
 }
@@ -53,7 +54,7 @@ function getThreeItems(){
   var threeItemArray = [];
   var indexArray = [];
   var validItem = true;
-  while(threeItemArray.length != 3){
+  while(threeItemArray.length !== 3){
     var item = itemsArray[Math.floor(Math.random() * itemsArray.length)];
     for (var i = 0; i < threeItemArray.length; i++){
       if (threeItemArray[i].name === item.name){
