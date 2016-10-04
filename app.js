@@ -48,20 +48,20 @@ function BusMallItem(imgSrc, displayName, name){
 }
 //**********************get three items*****************************************
 function getThreeItems(){
-  var threeArray = [];
+  var threeItemArray = [];
   var indexArray = [];
   var validItem = true;
-  while(threeArray.length != 3){
+  while(threeItemArray.length != 3){
     var item = itemsArray[Math.floor(Math.random() * itemsArray.length)];
-    for (var i = 0; i < threeArray.length; i++){
-      if (threeArray[i].name === item.name){
+    for (var i = 0; i < threeItemArray.length; i++){
+      if (threeItemArray[i].name === item.name){
         console.log('Doubles Prevented ' + item.name);
         validItem = false;
       }
     }
     if (validItem && item.recentlyUsed !== true){
       indexArray.push(findIndexByName(item.name));
-      threeArray.push(item);
+      threeItemArray.push(item);
       item.timesDisplayed += 1;
     }
     else {
@@ -73,7 +73,7 @@ function getThreeItems(){
   itemsArray[indexArray[0]].recentlyUsed = true;
   itemsArray[indexArray[1]].recentlyUsed = true;
   itemsArray[indexArray[2]].recentlyUsed = true;
-  return threeArray;
+  return threeItemArray;
 }
 //************ Helper Functions for getThreeItems()***************************
 function findIndexByName(name){
