@@ -9,25 +9,30 @@ var complete = document.getElementById('complete');
 var chartData = document.getElementById('displayCharts');
 
 //**********************intialize catalog***************************************
-new BusMallItem('img/banana.jpg', 'Banana Slicer', 'banana');
-new BusMallItem('img/bathroom.jpg', 'Bathroom Device Stand', 'bathroom');
-new BusMallItem('img/boots.jpg', 'Toeless Rain Boots', 'boots');
-new BusMallItem('img/breakfast.jpg', 'Toaster Pan Pot', 'breakfast');
-new BusMallItem('img/bubblegum.jpg', 'Meatball BubbleGum', 'bubblegum');
-new BusMallItem('img/chair.jpg', 'Uncomfortable Chair', 'chair');
-new BusMallItem('img/cthulhu.jpg', 'Cthulhu', 'cthulhu');
-new BusMallItem('img/dog-duck.jpg', 'Dog Duck Beak', 'dog-duck');
-new BusMallItem('img/dragon.jpg', 'Dragon Meat', 'dragon');
-new BusMallItem('img/pen.jpg', 'Pen Cap Utensils', 'pen');
-new BusMallItem('img/pet-sweep.jpg', 'Pet Sweep Slippers', 'pet-sweep');
-new BusMallItem('img/scissors.jpg', 'Pizza Scissors', 'scissors');
-new BusMallItem('img/shark.jpg', 'Shark Sleeping Bag', 'shark');
-new BusMallItem('img/sweep.png', 'Baby Sweeper PJs', 'sweep');
-new BusMallItem('img/tauntaun.jpg', 'Tauntaun Sleeping Bag', 'tauntaun');
-new BusMallItem('img/unicorn.jpg', 'Unicorn Meat', 'unicorn');
-new BusMallItem('img/usb.gif', 'Tentical USB', 'usb');
-new BusMallItem('img/water-can.jpg', 'Self Filling Water Can', 'water-can');
-new BusMallItem('img/wine-glass.jpg', 'Spillful Wineglass', 'wine-glass');
+var localStorageArray = localStorage.getItem('itemsArray');
+if (localStorageArray){
+  itemsArray = JSON.parse(localStorageArray);
+} else{
+  new BusMallItem('img/banana.jpg', 'Banana Slicer', 'banana');
+  new BusMallItem('img/bathroom.jpg', 'Bathroom Device Stand', 'bathroom');
+  new BusMallItem('img/boots.jpg', 'Toeless Rain Boots', 'boots');
+  new BusMallItem('img/breakfast.jpg', 'Toaster Pan Pot', 'breakfast');
+  new BusMallItem('img/bubblegum.jpg', 'Meatball BubbleGum', 'bubblegum');
+  new BusMallItem('img/chair.jpg', 'Uncomfortable Chair', 'chair');
+  new BusMallItem('img/cthulhu.jpg', 'Cthulhu', 'cthulhu');
+  new BusMallItem('img/dog-duck.jpg', 'Dog Duck Beak', 'dog-duck');
+  new BusMallItem('img/dragon.jpg', 'Dragon Meat', 'dragon');
+  new BusMallItem('img/pen.jpg', 'Pen Cap Utensils', 'pen');
+  new BusMallItem('img/pet-sweep.jpg', 'Pet Sweep Slippers', 'pet-sweep');
+  new BusMallItem('img/scissors.jpg', 'Pizza Scissors', 'scissors');
+  new BusMallItem('img/shark.jpg', 'Shark Sleeping Bag', 'shark');
+  new BusMallItem('img/sweep.png', 'Baby Sweeper PJs', 'sweep');
+  new BusMallItem('img/tauntaun.jpg', 'Tauntaun Sleeping Bag', 'tauntaun');
+  new BusMallItem('img/unicorn.jpg', 'Unicorn Meat', 'unicorn');
+  new BusMallItem('img/usb.gif', 'Tentical USB', 'usb');
+  new BusMallItem('img/water-can.jpg', 'Self Filling Water Can', 'water-can');
+  new BusMallItem('img/wine-glass.jpg', 'Spillful Wineglass', 'wine-glass');
+}
 console.log(itemsArray);
 //**********************item constructor****************************************
 function BusMallItem(imgSrc, displayName, name){
@@ -38,15 +43,6 @@ function BusMallItem(imgSrc, displayName, name){
   this.timesClicked = 0;
   this.recentlyUsed = false;
 
-  this.displayItem = function(){
-    var lineElement = document.createElement('li');
-    var imageElement = document.createElement('img');
-    imageElement.src = this.imageSource;
-    imageElement.alt = this.name;
-    lineElement.appendChild(imageElement);
-    choices.appendChild(lineElement);
-
-  };
   itemsArray.push(this);
 }
 //**********************get three items*****************************************
@@ -98,8 +94,16 @@ function displayThreeItems(){
   choices.innerHTML = '';
   var threeItems = getThreeItems();
   for (var i = 0; i < 3; i++){
-    threeItems[i].displayItem();
+    displayItem(threeItems[i]);
   }
+}
+function displayItem(item){
+  var lineElement = document.createElement('li');
+  var imageElement = document.createElement('img');
+  imageElement.src = item.imageSource;
+  imageElement.alt = item.name;
+  lineElement.appendChild(imageElement);
+  choices.appendChild(lineElement);
 }
 function runMain(){
   displayThreeItems();
@@ -118,12 +122,21 @@ function handleClickEvent(event){
       itemsArray[i].timesClicked += 1;
     }
   }
+  var arrayToStore = JSON.stringify(itemsArray);
+  localStorage.setItem('itemsArray',arrayToStore);
   displayThreeItems();
   count++;
   if (count === 25){
     removeListenerAndUpdate();
   }
 }
+function clearLocalStorage(){
+  localStorage.clear();
+}
+function reloadPage(){
+  location.reload();
+}
+
 //**********************remove eventHandler*************************************
 function removeListenerAndUpdate(){
   selectionDisplay.removeEventListener('click',handleClickEvent);
@@ -144,6 +157,8 @@ function displayResults(){
 //**********************eventListeners******************************************
 selectionDisplay.addEventListener('click', handleClickEvent);
 complete.addEventListener('click',displayResults);
+reset.addEventListener('click',clearLocalStorage);
+tryAgain.addEventListener('click',reloadPage);
 //**********************Charting Data*******************************************
 var labelArray = [];
 var dataArray = [];
@@ -161,6 +176,7 @@ var data = {
   datasets: [
     {
       data: dataArray,
+      label: 'Clicks Per Item',
       backgroundColor: [
         'red', 'orange','yellow', 'green', 'blue', 'indigo','violet', 'magenta',
         'brown', 'navy', 'turquoise', 'steelblue', 'tomato', 'pink', 'olive',
