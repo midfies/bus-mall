@@ -1,9 +1,13 @@
 *{
   margin: 0;
   padding: 0;
-  /*outline: 1px dashed red;*/
-}
+  max-width:1024px;
 
+  outline: 1px dashed red;
+}
+body{
+  background-color: #48A9A6;
+}
 img{
   max-width: 300px;
   max-height: 300px;
@@ -31,4 +35,43 @@ li{
   display: block;
   width: auto;
   height: auto;
+}
+header{
+  position: relative;
+}
+header h1{
+width: 900px;
+margin: 0 auto;
+text-align: center;
+font-size: 3em;
+margin: 30px auto;
+}
+header button{
+  width: 100px;
+  height: 50px;
+  background-color: #F85A3E;
+  border:none;
+  color: white;
+  margin-left: 10px;
+}
+.buttons{
+  width: 900px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  text-align: center;
+}
+body p{
+  width: 900px;
+  text-align: center;
+  margin: 0 auto;
+  line-height: 1.3em;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+#selectionDisplay li{
+  background-color: white;
+}
+canvas{
+  max-width: 900px;
+  margin: 0 auto;
 }

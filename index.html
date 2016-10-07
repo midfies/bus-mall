@@ -9,13 +9,21 @@
   <body>
     <header>
       <h1>Welcome To Bus-Mall</h1>
-      <button id="reset">Reset Results</button>
-      <button id="tryAgain">Start Over</button>
+      <div class="buttons">
+        <button id="reset">Reset Results</button>
+        <button id="tryAgain">Start Over</button>
+      </div>
     </header>
+    <p id="intro">This is a survey in order to bring to you the best possible products in the
+    Bus-Mall Catelog.  For each set of three pictures, please click on the items
+    that you would be mostly likely to buy compared to the other options! After 25
+    questions you will be able to view the results!  Have Fun!</p>
     <div id="selectionDisplay">
       <ul id="choices"></ul>
     </div>
-    <button id="complete" type="submit"></button><hr />
+    <div class="buttons">
+      <button id="complete" type="submit"></button><hr />
+    </div>
     <canvas id="displayCharts" width="900" height="575"></canvas>
     <hr />
     <ul id="results"></ul>
