@@ -144,13 +144,13 @@ function removeListenerAndUpdate(){
 }
 //**********************display results*****************************************
 function displayResults(){
-  results.innerHTML = '';
-  for (var i = 0; i < itemsArray.length; i++){
-    var lineElement = document.createElement('li');
-    lineElement.setAttribute('class', 'disp');
-    lineElement.textContent = itemsArray[i].name + ': Clicked/Displayed - ' + itemsArray[i].timesClicked + '/' + itemsArray[i].timesDisplayed;
-    results.appendChild(lineElement);
-  }
+  // results.innerHTML = '';
+  // for (var i = 0; i < itemsArray.length; i++){
+  //   var lineElement = document.createElement('li');
+  //   lineElement.setAttribute('class', 'disp');
+  //   lineElement.textContent = itemsArray[i].name + ': Clicked/Displayed - ' + itemsArray[i].timesClicked + '/' + itemsArray[i].timesDisplayed;
+  //   results.appendChild(lineElement);
+  // }
   prepareLabelsAndData();
   drawChart();
 }
